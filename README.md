@@ -68,6 +68,9 @@ The resulting binaries can be found in the `build/zephyr` folder.
 Gateware FPGA bitstream can be build using [Litex Build Environment](https://github.com/timvideos/litex-buildenv).
 Building gateware requires Vivado to be installed in the system.
 
+Note: Some buildenv's scritps have problems when running on a git repository in detached state.
+Execute `git checkout -b tf_demo` in `litex-buildenv` dictionary after cloning to avoid build errors.
+
 Build the gateware with:
 ```bash
 cd litex-buildenv
