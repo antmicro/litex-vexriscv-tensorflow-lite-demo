@@ -89,3 +89,58 @@ make gateware-load
 ```
 
 See [Litex Build Environment Wiki](https://github.com/timvideos/litex-buildenv/wiki/Getting-Started) for more available options.
+
+## Simulating in Renode
+
+`renode` directory contains model of ADXL345 accelerometer and all necessary scripts and assets required to simulate `Magic Wand` demo.
+
+Build the `Magic Wand` demo as described [in the section above](#magic-wand-demo).
+
+Run the simulation:
+```bash
+cd renode
+renode -e "s @litex-vexriscv-tflite.resc"
+```
+
+You should see the following output on uart:
+```
+Got id: 0xe5
+***** Booting Zephyr OS build v1.7.99-22021-ga6d97078a3e2 *****
+Got accelerometer
+RING:
+          *
+       *     *
+     *         *
+    *           *
+     *         *
+       *     *
+          *
+SLOPE:
+        *
+       *
+      *
+     *
+    *
+   *
+  *
+ * * * * * * * *
+RING:
+          *
+       *     *
+     *         *
+    *           *
+     *         *
+       *     *
+          *
+SLOPE:
+        *
+       *
+      *
+     *
+    *
+   *
+  *
+ * * * * * * * *
+```
+
+See [Renode documentation](https://renode.readthedocs.org) for details on how to install and use Renode.

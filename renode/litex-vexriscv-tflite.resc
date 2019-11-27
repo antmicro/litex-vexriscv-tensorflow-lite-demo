@@ -1,0 +1,25 @@
+using sysbus
+
+include $ORIGIN/ADXL345.cs
+include $ORIGIN/LiteX_I2C_Zephyr.cs
+
+mach create
+machine LoadPlatformDescription $ORIGIN/litex-vexriscv-tflite.repl
+
+showAnalyzer uart
+showAnalyzer uart Antmicro.Renode.Analyzers.LoggingUartAnalyzer
+
+macro reset
+"""
+    sysbus LoadELF $ORIGIN/../tensorflow/tensorflow/lite/experimental/micro/examples/magic_wand/zephyr_riscv/build/zephyr/zephyr.elf
+"""
+
+runMacro $reset
+
+i2c.adxl345 MaxFifoDepth 1
+i2c.adxl345 FeedSample $ORIGIN/circle.data
+i2c.adxl345 FeedSample $ORIGIN/angle.data
+i2c.adxl345 FeedSample $ORIGIN/circle.data
+i2c.adxl345 FeedSample $ORIGIN/angle.data
+i2c.adxl345 FeedSample 0 0 0 32
+
