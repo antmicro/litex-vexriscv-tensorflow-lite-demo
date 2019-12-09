@@ -1,7 +1,11 @@
 # Tensorflow lite demo running in Zephyr on Litex/VexRiscv SoC
 
-This repository collects all the repositories required to build and run Zephyr Tensorflow lite demos on Arty board.
-`magic wand` demo requires [PmodACL](https://store.digilentinc.com/pmod-acl-3-axis-accelerometer/) to be connected to the `JD` port of the Arty board.
+This repository collects all the repositories required to build and run Zephyr Tensorflow Lite demos on either:
+
+* a Digilent Arty board
+* the open source Renode simulation framework (no hardware required)
+
+The hardware version of the `magic wand` demo also requires a [PmodACL](https://store.digilentinc.com/pmod-acl-3-axis-accelerometer/) to be connected to the `JD` port of the Arty board.
 
 ## Prerequisites
 
@@ -65,11 +69,11 @@ The resulting binaries can be found in the `build/zephyr` folder.
 
 ## Building the gateware
 
-Gateware FPGA bitstream can be build using [Litex Build Environment](https://github.com/timvideos/litex-buildenv).
-Building gateware requires Vivado to be installed in the system.
+The FPGA bitstream (gateware) can be built using [Litex Build Environment](https://github.com/timvideos/litex-buildenv).
+Building the gateware currently requires Xilinx's FPGA tooling, Vivado, to be installed in the system.
 
-Note: Some buildenv's scritps have problems when running on a git repository in detached state.
-Execute `git checkout -b tf_demo` in `litex-buildenv` dictionary after cloning to avoid build errors.
+Note: Some of LiteX BuilEenv's scritps have problems when running in a git repository in detached state.
+Execute `git checkout -b tf_demo` in the `litex-buildenv` directory after cloning to avoid build errors.
 
 Build the gateware with:
 ```bash
@@ -86,26 +90,29 @@ source scripts/enter-env.sh
 make gateware
 ```
 
-Once you have a synthesized gateware, load it onto the FPGA with:
+Once you have synthesized the gateware, load it onto the FPGA with:
+
 ```bash
 make gateware-load
 ```
 
-See [Litex Build Environment Wiki](https://github.com/timvideos/litex-buildenv/wiki/Getting-Started) for more available options.
+See the [Litex Build Environment Wiki](https://github.com/timvideos/litex-buildenv/wiki/Getting-Started) for more available options.
 
 ## Simulating in Renode
 
-`renode` directory contains model of ADXL345 accelerometer and all necessary scripts and assets required to simulate `Magic Wand` demo.
+The `renode` directory contains a model of the ADXL345 accelerometer and all necessary scripts and assets required to simulate the `Magic Wand` demo.
 
 Build the `Magic Wand` demo as described [in the section above](#magic-wand-demo).
 
-Run the simulation:
+Install Renode as [detailed in its README file](https://github.com/renode/renode/blob/master/README.rst#installation).
+
+Now you should have everything to run the simulation:
 ```bash
 cd renode
 renode -e "s @litex-vexriscv-tflite.resc"
 ```
 
-You should see the following output on uart:
+You should see the following output on the UART (which will open as a separate terminal in Renode automatically):
 ```
 Got id: 0xe5
 ***** Booting Zephyr OS build v1.7.99-22021-ga6d97078a3e2 *****
@@ -146,4 +153,4 @@ SLOPE:
  * * * * * * * *
 ```
 
-See [Renode documentation](https://renode.readthedocs.org) for details on how to install and use Renode.
+Refer to the [Renode documentation](https://renode.readthedocs.org) for details on how to use Renode to implement more complex usage scenarios, and use its advanced debug capabilities, or set up CI testing your ML-oriented system. If you need commercial support, please contact us at [support@renode.io](mailto:support@renode.io).
