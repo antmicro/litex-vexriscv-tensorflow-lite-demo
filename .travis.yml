@@ -1,0 +1,33 @@
+os: linux
+dist: bionic
+language: c++
+
+before_install:
+        - export DEBIAN_FRONTEND=noninteractive
+
+install:
+        - sudo apt-get update && sudo apt-get install -y --no-install-recommends git ninja-build gperf ccache dfu-util device-tree-compiler wget python python3-pip python3-setuptools python3-tk python3-wheel xz-utils file make gcc gcc-multilib locales tar curl unzip
+        - sudo locale-gen "en_US.UTF-8"
+        - export LANG="en_US.UTF-8"
+        - wget https://cmake.org/files/v3.14/cmake-3.14.2-Linux-x86_64.tar.gz
+        - tar -xf cmake-3.14.2-Linux-x86_64.tar.gz
+        - export PATH=`realpath cmake-3.14.2-Linux-x86_64/bin`:$PATH
+
+script:
+        - ROOT=`pwd`
+        - sudo pip3 install west
+        - wget https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.10.3/zephyr-sdk-0.10.3-setup.run
+        - chmod +x zephyr-sdk-0.10.3-setup.run
+        - ./zephyr-sdk-0.10.3-setup.run -- -d ${ROOT}/zephyr-sdk
+        - export ZEPHYR_TOOLCHAIN_VARIANT=zephyr
+        - export ZEPHYR_SDK_INSTALL_DIR=${ROOT}/zephyr-sdk
+        - export ZEPHYR_BASE=${ROOT}/zephyr
+        - git submodule update --init --recursive
+        - python3 -m pip install -r zephyr/scripts/requirements.txt
+        - pushd tensorflow
+        - make -f tensorflow/lite/experimental/micro/tools/make/Makefile third_party_downloads
+        - pushd tensorflow/lite/experimental/micro/examples/hello_world/zephyr_riscv
+        - make build_zephyr_litex -j`nproc`
+        - cd ${ROOT}
+        - pushd tensorflow/tensorflow/lite/experimental/micro/examples/magic_wand/zephyr_riscv
+        - make build_zephyr_litex -j`nproc`
