@@ -6,16 +6,22 @@ before_install:
         - export DEBIAN_FRONTEND=noninteractive
 
 install:
-        - sudo apt-get update && sudo apt-get install -y --no-install-recommends git ninja-build gperf ccache dfu-util device-tree-compiler wget python python3-pip python3-setuptools python3-tk python3-wheel xz-utils file make gcc gcc-multilib locales tar curl unzip
+        - sudo apt-get update && sudo apt-get install -y --no-install-recommends git ninja-build gperf ccache dfu-util device-tree-compiler wget python python-pip python3-pip python3-setuptools python3-tk python3-wheel xz-utils file make gcc gcc-multilib locales tar curl unzip gnupg ca-certificates
+        - sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
+        - echo "deb https://download.mono-project.com/repo/ubuntu stable-bionic main" | sudo tee /etc/apt/sources.list.d/mono-official-stable.list
+        - sudo apt update
         - sudo locale-gen "en_US.UTF-8"
         - export LANG="en_US.UTF-8"
         - wget https://cmake.org/files/v3.14/cmake-3.14.2-Linux-x86_64.tar.gz
         - tar -xf cmake-3.14.2-Linux-x86_64.tar.gz
         - export PATH=`realpath cmake-3.14.2-Linux-x86_64/bin`:$PATH
+        - wget https://antmicro.com/projects/renode/builds/renode-latest.deb
+        - sudo apt install ./renode-latest.deb
 
 script:
         - ROOT=`pwd`
         - sudo pip3 install west
+        - sudo pip install psutil robotframework netifaces requests
         - wget https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.10.3/zephyr-sdk-0.10.3-setup.run
         - chmod +x zephyr-sdk-0.10.3-setup.run
         - ./zephyr-sdk-0.10.3-setup.run -- -d ${ROOT}/zephyr-sdk
@@ -31,3 +37,5 @@ script:
         - cd ${ROOT}
         - pushd tensorflow/tensorflow/lite/experimental/micro/examples/magic_wand/zephyr_riscv
         - make build_zephyr_litex -j`nproc`
+        - cd ${ROOT}
+        - renode-test renode/litex-vexriscv-tflite.robot
