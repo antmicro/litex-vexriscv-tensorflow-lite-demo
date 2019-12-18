@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/antmicro/litex-vexriscv-tensorflow-lite-demo.svg?branch=master)](https://travis-ci.com/antmicro/litex-vexriscv-tensorflow-lite-demo)
+
 # Tensorflow lite demo running in Zephyr on Litex/VexRiscv SoC
 
 This repository collects all the repositories required to build and run Zephyr Tensorflow Lite demos on either:
