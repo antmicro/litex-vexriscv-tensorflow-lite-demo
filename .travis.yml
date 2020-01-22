@@ -31,7 +31,6 @@ script:
         - git submodule update --init --recursive
         - python3 -m pip install -r zephyr/scripts/requirements.txt
         - pushd tensorflow
-        - make -f tensorflow/lite/micro/tools/make/Makefile TARGET=zephyr_vexriscv third_party_downloads
         - make -f tensorflow/lite/micro/tools/make/Makefile TARGET=zephyr_vexriscv hello_world_bin
         - make -f tensorflow/lite/micro/tools/make/Makefile TARGET=zephyr_vexriscv magic_wand_bin
         - cd ${ROOT}
