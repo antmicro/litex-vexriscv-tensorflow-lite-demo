@@ -48,15 +48,15 @@ export ZEPHYR_BASE=`pwd`/zephyr
 Download Tensorflow third party dependencies
 ```bash
 cd tensorflow
-make -f tensorflow/lite/experimental/micro/tools/make/Makefile third_party_downloads
+make -f tensorflow/lite/micro/tools/make/Makefile TARGET=zephyr_vexriscv third_party_downloads
 ```
 
 ### Hello World demo
 
 Build the `Hello World` demo with:
 ```bash
-cd tensorflow/tensorflow/lite/experimental/micro/examples/hello_world/zephyr_riscv
-make build_zephyr_litex -j`nproc`
+cd tensorflow
+make -f tensorflow/lite/micro/tools/make/Makefile TARGET=zephyr_vexriscv hello_world_bin
 ```
 The resulting binaries can be found in the `build/zephyr` folder.
 
@@ -64,8 +64,8 @@ The resulting binaries can be found in the `build/zephyr` folder.
 
 Build the `Magic Wand` demo with:
 ```bash
-cd tensorflow/tensorflow/lite/experimental/micro/examples/magic_wand/zephyr_riscv
-make build_zephyr_litex -j`nproc`
+cd tensorflow
+make -f tensorflow/lite/micro/tools/make/Makefile TARGET=zephyr_vexriscv magic_wand_bin
 ```
 The resulting binaries can be found in the `build/zephyr` folder.
 
