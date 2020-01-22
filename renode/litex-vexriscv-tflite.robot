@@ -58,9 +58,9 @@ Run TF Demo
     Execute Command           showAnalyzer uart
     Execute Command           showAnalyzer uart Antmicro.Renode.Analyzers.LoggingUartAnalyzer
 
-    Execute Command           sysbus LoadELF @${CURDIR}/../tensorflow/tensorflow/lite/experimental/micro/examples/magic_wand/zephyr_riscv/build/zephyr/zephyr.elf
+    Execute Command           sysbus LoadELF @${CURDIR}/../tensorflow/tensorflow/lite/micro/tools/make/gen/zephyr_vexriscv_x86_64/magic_wand/CMake/zephyr/zephyr.elf
 
-    Execute Command           i2c.adxl345 MaxFifoDepth 4
+    Execute Command           i2c.adxl345 MaxFifoDepth 1
     Execute Command           i2c.adxl345 FeedSample @${CURDIR}/circle.data
     Execute Command           i2c.adxl345 FeedSample @${CURDIR}/angle.data
     Execute Command           i2c.adxl345 FeedSample @${CURDIR}/circle.data
