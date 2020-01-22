@@ -72,7 +72,6 @@ namespace Antmicro.Renode.Peripherals.Sensors
 
                         rawDataFifo.Clear();
                         rawDataFifo.EnqueueRange(sample.GetRepresentation(fullResolution, range));
-
                         if(samplesFifo.Count == 0 && samplesFifoEmptied != null)
                         {
                             samplesFifoEmptied();
@@ -137,7 +136,10 @@ namespace Antmicro.Renode.Peripherals.Sensors
                 case Registers.Ydata1:
                 case Registers.Zdata0:
                 case Registers.Zdata1:
-                    result = new[] { rawDataFifo.TryDequeue(out var val) ? val : (byte)0 };
+                    result = new byte[count];
+                    for(int i = 0; i < count; i++) {
+                        result[i] = rawDataFifo.TryDequeue(out var val) ? val : (byte)0 ;
+                    }
                     break;
 
                 case Registers.FifoStatus:
@@ -199,7 +201,6 @@ namespace Antmicro.Renode.Peripherals.Sensors
                         samples = null;
                         return false;
                     }
-
                     localQueue.Enqueue(new Sample(x, y, z));
                 }
             }
