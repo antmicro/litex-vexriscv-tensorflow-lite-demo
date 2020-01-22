@@ -26,6 +26,7 @@ namespace Antmicro.Renode.Peripherals.I2C
             // 0 - clock, 1 - data
             i2cDecoder = new BitPatternDetector(new [] { true, true }, this);
             i2cDecoder.RegisterPatternHandler((prev, curr) => !prev[ClockSignal] && curr[ClockSignal], name: "clockRising", action: HandleClockRising);
+            i2cDecoder.RegisterPatternHandler((prev, curr) => prev[ClockSignal] && !curr[ClockSignal], name: "clockFalling", action: HandleClockFalling);
             i2cDecoder.RegisterPatternHandler((prev, curr) => prev[ClockSignal] && curr[ClockSignal] && prev[DataSignal] && !curr[DataSignal], name: "start", action: HandleStartCondition);
             i2cDecoder.RegisterPatternHandler((prev, curr) => prev[ClockSignal] && curr[ClockSignal] && !prev[DataSignal] && curr[DataSignal], name: "stop", action: HandleStopCondition);
 
@@ -121,9 +122,6 @@ namespace Antmicro.Renode.Peripherals.I2C
 
         private void HandleClockRising(bool[] signals)
         {
-            // move to the next bit in the device queue
-            bufferFromDevice.TryDequeue(out var unused);
-
             switch(state)
             {
                 case State.Address:
@@ -151,15 +149,15 @@ namespace Antmicro.Renode.Peripherals.I2C
                     isRead = signals[DataSignal];
                     this.Log(LogLevel.Noisy, "Operation decoded: {0}", isRead ? "read" : "write");
 
-                    // write ACK(false) or NACK(true)
-                    bufferFromDevice.Enqueue(slave == null);
-
                     state = State.AddressAck;
                     break;
                 }
 
                 case State.AddressAck:
                 {
+                    // write ACK(false) or NACK(true)
+                    bufferFromDevice.Enqueue(slave == null);
+
                     if(slave == null)
                     {
                         // ignore the rest of transmission until the next (repeated) start condition
@@ -167,7 +165,15 @@ namespace Antmicro.Renode.Peripherals.I2C
                     }
                     else if(isRead)
                     {
-                        ReadByteFromDevice();
+                        this.Log(LogLevel.Noisy, "Reading from device");
+                        foreach(var @byte in slave.Read(6))
+                        {
+                            foreach(var bit in BitHelper.GetBits(@byte).Take(8).Reverse())
+                            {
+                                this.Log(LogLevel.Noisy, "Enqueuing bit: {0}", bit);
+                                bufferFromDevice.Enqueue(bit);
+                            }
+                        }
 
                         tickCounter = 0;
                         state = State.Read;
@@ -191,8 +197,6 @@ namespace Antmicro.Renode.Peripherals.I2C
 
                 case State.ReadAck:
                 {
-                    ReadByteFromDevice();
-
                     tickCounter = 0;
                     state = State.Read;
                     break;
@@ -206,10 +210,6 @@ namespace Antmicro.Renode.Peripherals.I2C
                     if(bufferToDevice.Count == 8)
                     {
                         state = State.WriteAck;
-
-                        // ACK
-                        this.Log(LogLevel.Noisy, "Enqueuing ACK");
-                        bufferFromDevice.Enqueue(false);
                     }
                     break;
                 }
@@ -223,25 +223,20 @@ namespace Antmicro.Renode.Peripherals.I2C
 
                     bytesToDevice.Enqueue(dataByte);
 
+                    // ACK
+                    this.Log(LogLevel.Noisy, "Enqueuing ACK");
+                    bufferFromDevice.Enqueue(false);
+
                     state = State.Write;
                     break;
                 }
             }
         }
 
-        private void ReadByteFromDevice()
+        private void HandleClockFalling(bool[] signals)
         {
-            this.Log(LogLevel.Noisy, "Reading from device");
-            bufferFromDevice.Clear();
-            foreach(var @byte in slave.Read())
-            {
-                this.Log(LogLevel.Noisy, "Received byte: 0x{0:X}", @byte);
-
-                foreach(var bit in BitHelper.GetBits(@byte).Take(8).Reverse())
-                {
-                    this.Log(LogLevel.Noisy, "Enqueuing bit: {0}", bit);
-                    bufferFromDevice.Enqueue(bit);
-                }
+            if(state == State.Read) {
+                var isEmpty = bufferFromDevice.TryDequeue(out var unused);
             }
         }
 
@@ -261,7 +256,6 @@ namespace Antmicro.Renode.Peripherals.I2C
         private readonly Stack<bool> bufferToDevice;
         private readonly Queue<bool> bufferFromDevice;
         private readonly Queue<byte> bytesToDevice;
-        private readonly bool readOnFallingEdge;
 
         private State state;
         private int tickCounter;
@@ -290,3 +284,4 @@ namespace Antmicro.Renode.Peripherals.I2C
         }
     }
 }
+
