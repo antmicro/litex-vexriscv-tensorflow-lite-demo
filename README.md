@@ -45,12 +45,6 @@ export ZEPHYR_SDK_INSTALL_DIR=/opt/zephyr-sdk
 export ZEPHYR_BASE=`pwd`/zephyr
 ```
 
-Download Tensorflow third party dependencies
-```bash
-cd tensorflow
-make -f tensorflow/lite/micro/tools/make/Makefile TARGET=zephyr_vexriscv third_party_downloads
-```
-
 ### Hello World demo
 
 Build the `Hello World` demo with:
