@@ -52,7 +52,7 @@ Build the `Hello World` demo with:
 cd tensorflow
 make -f tensorflow/lite/micro/tools/make/Makefile TARGET=zephyr_vexriscv hello_world_bin
 ```
-The resulting binaries can be found in the `build/zephyr` folder.
+The resulting binaries can be found in the `tensorflow/lite/micro/tools/make/gen/zephyr_vexriscv_x86_64/hello_world/CMake/zephyr` folder.
 
 ### Magic Wand demo
 
@@ -61,7 +61,7 @@ Build the `Magic Wand` demo with:
 cd tensorflow
 make -f tensorflow/lite/micro/tools/make/Makefile TARGET=zephyr_vexriscv magic_wand_bin
 ```
-The resulting binaries can be found in the `build/zephyr` folder.
+The resulting binaries can be found in the `tensorflow/lite/micro/tools/make/gen/zephyr_vexriscv_x86_64/magic_wand/CMake/zephyr` folder.
 
 ## Building the gateware
 
