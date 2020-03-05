@@ -1,9 +1,6 @@
 [submodule "litex-buildenv"]
 	path = litex-buildenv
 	url = https://github.com/antmicro/litex-buildenv
-[submodule "zephyr"]
-	path = zephyr
-	url = https://github.com/antmicro/zephyr
 [submodule "tensorflow"]
 	path = tensorflow
 	url = https://github.com/antmicro/tensorflow
