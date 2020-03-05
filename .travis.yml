@@ -28,10 +28,11 @@ script:
         - export ZEPHYR_TOOLCHAIN_VARIANT=zephyr
         - export ZEPHYR_SDK_INSTALL_DIR=${ROOT}/zephyr-sdk
         - export ZEPHYR_BASE=${ROOT}/zephyr
+        - west init -m https://github.com/antmicro/zephyr.git --mr i2c-fix
         - git submodule update --init --recursive
         - python3 -m pip install -r zephyr/scripts/requirements.txt
         - pushd tensorflow
-        - make -f tensorflow/lite/micro/tools/make/Makefile TARGET=zephyr_vexriscv hello_world_bin
-        - make -f tensorflow/lite/micro/tools/make/Makefile TARGET=zephyr_vexriscv magic_wand_bin
+        - make -f tensorflow/lite/micro/tools/make/Makefile TARGET=zephyr_vexriscv hello_world_bin -j$(nproc)
+        - make -f tensorflow/lite/micro/tools/make/Makefile TARGET=zephyr_vexriscv magic_wand_bin -j$(nproc)
         - cd ${ROOT}
         - renode-test renode/litex-vexriscv-tflite.robot
