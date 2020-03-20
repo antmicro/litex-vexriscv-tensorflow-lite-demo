@@ -50,4 +50,3 @@ deploy:
         file: binaries.tar.gz
         on:
                 repo: antmicro/litex-vexriscv-tensorflow-lite-demo
-                branch: travis-releases
