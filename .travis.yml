@@ -12,27 +12,23 @@ install:
         - sudo apt update
         - sudo locale-gen "en_US.UTF-8"
         - export LANG="en_US.UTF-8"
-        - wget https://cmake.org/files/v3.14/cmake-3.14.2-Linux-x86_64.tar.gz
+        - wget -q https://cmake.org/files/v3.14/cmake-3.14.2-Linux-x86_64.tar.gz
         - tar -xf cmake-3.14.2-Linux-x86_64.tar.gz
         - export PATH=`realpath cmake-3.14.2-Linux-x86_64/bin`:$PATH
-        - wget https://antmicro.com/projects/renode/builds/renode-latest.deb
+        - wget -q https://antmicro.com/projects/renode/builds/renode-latest.deb
         - sudo apt install ./renode-latest.deb
 
 script:
         - ROOT=`pwd`
-        - sudo pip3 install west
         - sudo pip install psutil robotframework netifaces requests
-        - wget https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.10.3/zephyr-sdk-0.10.3-setup.run
-        - chmod +x zephyr-sdk-0.10.3-setup.run
-        - ./zephyr-sdk-0.10.3-setup.run -- -d ${ROOT}/zephyr-sdk
+        - wget -q https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.11.2/zephyr-sdk-0.11.2-setup.run
+        - chmod +x zephyr-sdk-0.11.2-setup.run
+        - ./zephyr-sdk-0.11.2-setup.run -- -d ${ROOT}/zephyr-sdk -y
         - export ZEPHYR_TOOLCHAIN_VARIANT=zephyr
         - export ZEPHYR_SDK_INSTALL_DIR=${ROOT}/zephyr-sdk
-        - export ZEPHYR_BASE=${ROOT}/zephyr
-        - west init -m https://github.com/antmicro/zephyr.git --mr tf-lite
         - git submodule update --init --recursive
-        - python3 -m pip install -r zephyr/scripts/requirements.txt
         - pushd tensorflow
         - make -f tensorflow/lite/micro/tools/make/Makefile TARGET=zephyr_vexriscv hello_world_bin -j$(nproc)
         - make -f tensorflow/lite/micro/tools/make/Makefile TARGET=zephyr_vexriscv magic_wand_bin -j$(nproc)
         - cd ${ROOT}
-        - renode-test renode/litex-vexriscv-tflite.robot
+        - travis_wait renode-test renode/litex-vexriscv-tflite.robot
