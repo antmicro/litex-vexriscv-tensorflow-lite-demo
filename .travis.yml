@@ -28,7 +28,7 @@ script:
         - export ZEPHYR_TOOLCHAIN_VARIANT=zephyr
         - export ZEPHYR_SDK_INSTALL_DIR=${ROOT}/zephyr-sdk
         - export ZEPHYR_BASE=${ROOT}/zephyr
-        - west init -m https://github.com/antmicro/zephyr.git --mr i2c-fix
+        - west init -m https://github.com/antmicro/zephyr.git --mr tf-lite
         - git submodule update --init --recursive
         - python3 -m pip install -r zephyr/scripts/requirements.txt
         - pushd tensorflow
