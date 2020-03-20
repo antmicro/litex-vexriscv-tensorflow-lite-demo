@@ -15,7 +15,7 @@ Clone the repository and submodules:
 ```bash
 git clone https://github.com/antmicro/litex-vexriscv-tensorflow-lite-demo
 cd litex-vexriscv-tensorflow-lite-demo
-west init -m https://github.com/antmicro/zephyr.git --mr i2c-fix
+west init -m https://github.com/antmicro/zephyr.git --mr tf-lite
 git submodule update --init --recursive
 ```
 
