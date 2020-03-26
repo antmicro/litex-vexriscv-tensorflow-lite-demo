@@ -7,10 +7,11 @@ mach create
 machine LoadPlatformDescription $ORIGIN/litex-vexriscv-tflite.repl
 showAnalyzer uart
 showAnalyzer uart Antmicro.Renode.Analyzers.LoggingUartAnalyzer
+logLevel 3 i2c
 
 macro reset
 """
-    sysbus LoadELF $ORIGIN/../tensorflow/tensorflow/lite/micro/tools/make/gen/zephyr_vexriscv_x86_64/magic_wand/CMake/zephyr/zephyr.elf
+    sysbus LoadELF $ORIGIN/../binaries/magic_wand/zephyr.elf
 """
 
 runMacro $reset
