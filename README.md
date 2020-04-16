@@ -10,30 +10,35 @@ This repository collects all the repositories required to build and run Zephyr T
 The hardware version of the `magic wand` demo also requires a [PmodACL](https://store.digilentinc.com/pmod-acl-3-axis-accelerometer/) to be connected to the `JD` port of the Arty board.
 
 ## Prerequisites
+Install Python and west:
+```bash
+sudo apt update
+sudo apt install python python3-pip python3-setuptools python3-tk python3-wheel
+sudo pip3 install west
+```
 
 Clone the repository and submodules:
 ```bash
 git clone https://github.com/antmicro/litex-vexriscv-tensorflow-lite-demo
 cd litex-vexriscv-tensorflow-lite-demo
+DEMO_HOME=`pwd`
 west init -m https://github.com/antmicro/zephyr.git --mr tf-lite
 git submodule update --init --recursive
 ```
 
-Install prerequisites (tested on Ubuntu 18.04):
+Install remaining prerequisites (tested on Ubuntu 18.04):
 ```bash
-sudo apt update
-sudo apt install cmake ninja-build gperf ccache dfu-util device-tree-compiler wget python python3-pip python3-setuptools python3-tk python3-wheel xz-utils file make gcc gcc-multilib locales tar curl unzip
+sudo apt install cmake ninja-build gperf ccache dfu-util device-tree-compiler wget xz-utils file make gcc gcc-multilib locales tar curl unzip
 ```
 
 Install Zephyr prerequisites:
 ```bash
-sudo pip3 install west
 # update cmake to required version
 sudo pip3 install cmake
 # install Zephyr SDK
 wget https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.10.3/zephyr-sdk-0.10.3-setup.run
 chmod +x zephyr-sdk-0.10.3-setup.run
-./zephyr-sdk-0.10.3-setup.run -- -d /opt/zephyr-sdk
+sudo ./zephyr-sdk-0.10.3-setup.run -- -d /opt/zephyr-sdk
 sudo pip3 install -r zephyr/scripts/requirements.txt
 ```
 
@@ -50,7 +55,7 @@ export ZEPHYR_BASE=`pwd`/zephyr
 
 Build the `Hello World` demo with:
 ```bash
-cd tensorflow
+cd $DEMO_HOME/tensorflow
 make -f tensorflow/lite/micro/tools/make/Makefile TARGET=zephyr_vexriscv hello_world_bin
 ```
 The resulting binaries can be found in the `tensorflow/lite/micro/tools/make/gen/zephyr_vexriscv_x86_64/hello_world/CMake/zephyr` folder.
@@ -59,12 +64,14 @@ The resulting binaries can be found in the `tensorflow/lite/micro/tools/make/gen
 
 Build the `Magic Wand` demo with:
 ```bash
-cd tensorflow
+cd $DEMO_HOME/tensorflow
 make -f tensorflow/lite/micro/tools/make/Makefile TARGET=zephyr_vexriscv magic_wand_bin
 ```
 The resulting binaries can be found in the `tensorflow/lite/micro/tools/make/gen/zephyr_vexriscv_x86_64/magic_wand/CMake/zephyr` folder.
 
 ## Building the gateware
+
+Note: For this section, if you have not already updated your udev rules, follow the instructions at "[Download & setup udev rules](https://github.com/timvideos/litex-buildenv/wiki/HowTo-LCA2018-FPGA-Miniconf#download--setup-udev-rules)" -- you probably won't need to reboot.
 
 The FPGA bitstream (gateware) can be built using [Litex Build Environment](https://github.com/timvideos/litex-buildenv).
 Building the gateware currently requires Xilinx's FPGA tooling, Vivado, to be installed in the system.
@@ -74,7 +81,7 @@ Execute `git checkout -b tf_demo` in the `litex-buildenv` directory after clonin
 
 Build the gateware with:
 ```bash
-cd litex-buildenv
+cd $DEMO_HOME/litex-buildenv
 export CPU=vexriscv
 export CPU_VARIANT=full
 export PLATFORM=arty
@@ -105,7 +112,7 @@ Install Renode as [detailed in its README file](https://github.com/renode/renode
 
 Now you should have everything to run the simulation:
 ```bash
-cd renode
+cd $DEMO_HOME/renode
 renode -e "s @litex-vexriscv-tflite.resc"
 ```
 
