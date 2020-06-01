@@ -15,7 +15,6 @@ Clone the repository and submodules:
 ```bash
 git clone https://github.com/antmicro/litex-vexriscv-tensorflow-lite-demo
 cd litex-vexriscv-tensorflow-lite-demo
-west init -m https://github.com/antmicro/zephyr.git --mr tf-lite
 git submodule update --init --recursive
 ```
 
@@ -31,10 +30,9 @@ sudo pip3 install west
 # update cmake to required version
 sudo pip3 install cmake
 # install Zephyr SDK
-wget https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.10.3/zephyr-sdk-0.10.3-setup.run
-chmod +x zephyr-sdk-0.10.3-setup.run
-./zephyr-sdk-0.10.3-setup.run -- -d /opt/zephyr-sdk
-sudo pip3 install -r zephyr/scripts/requirements.txt
+wget https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.11.2/zephyr-sdk-0.11.2-setup.run
+chmod +x zephyr-sdk-0.11.2-setup.run
+./zephyr-sdk-0.11.2-setup.run -- -d /opt/zephyr-sdk
 ```
 
 ## Building the demos
@@ -43,7 +41,6 @@ Setup the environment
 ```bash
 export ZEPHYR_TOOLCHAIN_VARIANT=zephyr
 export ZEPHYR_SDK_INSTALL_DIR=/opt/zephyr-sdk
-export ZEPHYR_BASE=`pwd`/zephyr
 ```
 
 ### Hello World demo
@@ -53,7 +50,7 @@ Build the `Hello World` demo with:
 cd tensorflow
 make -f tensorflow/lite/micro/tools/make/Makefile TARGET=zephyr_vexriscv hello_world_bin
 ```
-The resulting binaries can be found in the `tensorflow/lite/micro/tools/make/gen/zephyr_vexriscv_x86_64/hello_world/CMake/zephyr` folder.
+The resulting binaries can be found in the `tensorflow/lite/micro/tools/make/gen/zephyr_vexriscv_x86_64/hello_world/build/zephyr` folder.
 
 ### Magic Wand demo
 
@@ -62,14 +59,14 @@ Build the `Magic Wand` demo with:
 cd tensorflow
 make -f tensorflow/lite/micro/tools/make/Makefile TARGET=zephyr_vexriscv magic_wand_bin
 ```
-The resulting binaries can be found in the `tensorflow/lite/micro/tools/make/gen/zephyr_vexriscv_x86_64/magic_wand/CMake/zephyr` folder.
+The resulting binaries can be found in the `tensorflow/lite/micro/tools/make/gen/zephyr_vexriscv_x86_64/magic_wand/build/zephyr` folder.
 
 ## Building the gateware
 
 The FPGA bitstream (gateware) can be built using [Litex Build Environment](https://github.com/timvideos/litex-buildenv).
 Building the gateware currently requires Xilinx's FPGA tooling, Vivado, to be installed in the system.
 
-Note: Some of LiteX BuilEenv's scritps have problems when running in a git repository in detached state.
+Note: Some of LiteX Buildenv's scritps have problems when running in a git repository in detached state.
 Execute `git checkout -b tf_demo` in the `litex-buildenv` directory after cloning to avoid build errors.
 
 Build the gateware with:
