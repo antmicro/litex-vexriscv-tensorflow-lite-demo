@@ -26,7 +26,6 @@ sudo apt install cmake ninja-build gperf ccache dfu-util device-tree-compiler wg
 
 Install Zephyr prerequisites:
 ```bash
-sudo pip3 install west
 # update cmake to required version
 sudo pip3 install cmake
 # install Zephyr SDK
@@ -36,12 +35,6 @@ chmod +x zephyr-sdk-0.11.2-setup.run
 ```
 
 ## Building the demos
-
-Setup the environment
-```bash
-export ZEPHYR_TOOLCHAIN_VARIANT=zephyr
-export ZEPHYR_SDK_INSTALL_DIR=/opt/zephyr-sdk
-```
 
 ### Hello World demo
 
