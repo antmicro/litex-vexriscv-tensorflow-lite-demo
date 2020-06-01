@@ -26,7 +26,6 @@ sudo apt install cmake ninja-build gperf ccache dfu-util device-tree-compiler wg
 
 Install Zephyr prerequisites:
 ```bash
-sudo pip3 install west
 # update cmake to required version
 sudo pip3 install cmake
 # install Zephyr SDK
