@@ -50,7 +50,7 @@ namespace Antmicro.Renode.Peripherals.I2C
 
                         if(bufferFromDevice.Count == 0)
                         {
-                            this.Log(LogLevel.Warning, "There are no more output bits to read");
+                            this.Log(LogLevel.Noisy, "There are no more output bits to read");
                             // SDA is high when no data
                             return true;
                         }

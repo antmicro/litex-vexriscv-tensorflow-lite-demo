@@ -55,7 +55,6 @@ Run TF Demo
     Execute Command           mach create
     Execute Command           machine LoadPlatformDescription @${CURDIR}/litex-vexriscv-tflite.repl
 
-    Execute Command           showAnalyzer uart
     Execute Command           showAnalyzer uart Antmicro.Renode.Analyzers.LoggingUartAnalyzer
 
     Execute Command           sysbus LoadELF @${CURDIR}/../tensorflow/tensorflow/lite/micro/tools/make/gen/zephyr_vexriscv_x86_64/magic_wand/build/zephyr/zephyr.elf
