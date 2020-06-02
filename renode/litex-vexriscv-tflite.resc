@@ -1,6 +1,5 @@
 using sysbus
 
-include $ORIGIN/ADXL345.cs
 include $ORIGIN/LiteX_I2C_Zephyr.cs
 
 mach create

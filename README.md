@@ -87,7 +87,7 @@ See the [Litex Build Environment Wiki](https://github.com/timvideos/litex-builde
 
 ## Simulating in Renode
 
-The `renode` directory contains a model of the ADXL345 accelerometer and all necessary scripts and assets required to simulate the `Magic Wand` demo.
+The `renode` directory contains all necessary scripts and assets required to simulate the `Magic Wand` demo.
 
 Build the `Magic Wand` demo as described [in the section above](#magic-wand-demo).
 

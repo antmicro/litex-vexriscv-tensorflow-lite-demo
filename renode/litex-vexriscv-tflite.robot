@@ -49,7 +49,6 @@ Wait For Slope
 Run TF Demo
     Execute Command           using sysbus
 
-    Execute Command           include @${CURDIR}/ADXL345.cs
     Execute Command           include @${CURDIR}/LiteX_I2C_Zephyr.cs
 
     Execute Command           mach create
