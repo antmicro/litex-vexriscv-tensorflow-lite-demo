@@ -5,7 +5,6 @@ include $ORIGIN/LiteX_I2C_Zephyr.cs
 mach create
 machine LoadPlatformDescription $ORIGIN/litex-vexriscv-tflite.repl
 showAnalyzer uart
-showAnalyzer uart Antmicro.Renode.Analyzers.LoggingUartAnalyzer
 logLevel 3 i2c
 
 macro reset
