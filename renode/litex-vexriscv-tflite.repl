@@ -7,23 +7,14 @@ ram: Memory.MappedMemory @ {
 cpu: CPU.VexRiscv @ sysbus
     cpuType: "rv32imac"
 
-uart: UART.LiteX_UART @ {
-        sysbus 0x60001800;
-        sysbus 0xE0001800 // shadow
-    }
+uart: UART.LiteX_UART @ sysbus 0x82002000
     -> cpu@2
 
-timer0: Timers.LiteX_Timer @ {
-        sysbus 0x60002800;
-        sysbus 0xE0002800 // shadow
-    }
+timer0: Timers.LiteX_Timer @ sysbus 0x82002800
     frequency: 100000000
     -> cpu@1
 
-i2c: I2C.LiteX_I2C_Zephyr @ {
-        sysbus 0x60003000;
-        sysbus 0xE0003000 // shadow
-    }
+i2c: I2C.LiteX_I2C @ sysbus 0x82005800
 
 adxl345: Sensors.ADXL345 @ i2c 0x1D
 
