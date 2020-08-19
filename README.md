@@ -166,4 +166,6 @@ SLOPE:
  * * * * * * * * 
 ```
 
+In order to exit Renode, type `quit` in Monitor (the window with the Renode logo and `(machine-0)` prompt).
+
 Refer to the [Renode documentation](https://renode.readthedocs.org) for details on how to use Renode to implement more complex usage scenarios, and use its advanced debug capabilities, or set up CI testing your ML-oriented system. If you need commercial support, please contact us at [support@renode.io](mailto:support@renode.io).
