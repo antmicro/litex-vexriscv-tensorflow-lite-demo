@@ -105,14 +105,20 @@ See the [Litex Build Environment Wiki](https://github.com/timvideos/litex-builde
 
 The `renode` directory contains all necessary scripts and assets required to simulate the `Magic Wand` demo.
 
-Build the `Magic Wand` demo as described [in the section above](#magic-wand-demo).
-
 Install Renode as [detailed in its README file](https://github.com/renode/renode/blob/master/README.rst#installation).
 
-Now you should have everything to run the simulation:
+Build the `Magic Wand` demo as described [in the section above](#magic-wand-demo) or use a prebuilt binary from the `binares/magic_wand` directory.
+
+Now you should have everything to run the simulation using the locally built binary:
 ```bash
 cd $DEMO_HOME/renode
 renode -e "s @litex-vexriscv-tflite.resc"
+```
+
+Or using the prebuilt one: 
+```bash
+cd $DEMO_HOME/renode
+renode -e "set zephyr_elf @../binaries/magic_wand/zephyr.elf; s @litex-vexriscv-tflite.resc"
 ```
 
 You should see the following output on the UART (which will open as a separate terminal in Renode automatically):

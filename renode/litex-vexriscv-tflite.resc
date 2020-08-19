@@ -1,5 +1,7 @@
 using sysbus
 
+$zephyr_elf?=@../tensorflow/tensorflow/lite/micro/tools/make/gen/zephyr_vexriscv_x86_64/magic_wand/build/zephyr/zephyr.elf
+
 include $ORIGIN/LiteX_I2C_Zephyr.cs
 
 mach create
@@ -9,7 +11,7 @@ logLevel 3 i2c
 
 macro reset
 """
-    sysbus LoadELF $ORIGIN/../binaries/magic_wand/zephyr.elf
+    sysbus LoadELF $zephyr_elf
 
     i2c.adxl345 MaxFifoDepth 1
     i2c.adxl345 FeedSample $ORIGIN/circle.data
