@@ -6,7 +6,7 @@ before_install:
         - export DEBIAN_FRONTEND=noninteractive
 
 install:
-        - sudo apt-get update && sudo apt-get install -y --no-install-recommends git ninja-build gperf ccache dfu-util device-tree-compiler wget python python-pip python3-pip python3-setuptools python3-tk python3-wheel python3 xz-utils file make gcc gcc-multilib locales tar curl unzip gnupg ca-certificates
+        - sudo apt-get update && sudo apt-get install -y --no-install-recommends git ninja-build gperf ccache dfu-util device-tree-compiler wget python3-pip python3-setuptools python3-tk python3-wheel python3 xz-utils file make gcc gcc-multilib locales tar curl unzip gnupg ca-certificates
         - sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
         - echo "deb https://download.mono-project.com/repo/ubuntu stable-bionic main" | sudo tee /etc/apt/sources.list.d/mono-official-stable.list
         - sudo apt update
@@ -20,8 +20,8 @@ install:
 
 script:
         - ROOT=`pwd`
-        - sudo pip install psutil netifaces requests virtualenv
-        - sudo pip install robotframework==3.1.2
+        - sudo pip3 install psutil netifaces requests virtualenv
+        - sudo pip3 install robotframework==3.1.2
         - wget -q https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.11.2/zephyr-sdk-0.11.2-setup.run
         - chmod +x zephyr-sdk-0.11.2-setup.run
         - ./zephyr-sdk-0.11.2-setup.run -- -d ${ROOT}/zephyr-sdk -y
