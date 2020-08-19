@@ -31,7 +31,13 @@ sudo pip3 install cmake virtualenv
 # install Zephyr SDK
 wget https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.11.2/zephyr-sdk-0.11.2-setup.run
 chmod +x zephyr-sdk-0.11.2-setup.run
-./zephyr-sdk-0.11.2-setup.run -- -d /opt/zephyr-sdk
+sudo ./zephyr-sdk-0.11.2-setup.run -- -d /opt/zephyr-sdk
+```
+
+Export Zephyr configuration:
+```bash
+export ZEPHYR_TOOLCHAIN_VARIANT=zephyr
+export ZEPHYR_SDK_INSTALL_DIR=/opt/zephyr-sdk
 ```
 
 ## Building the demos
