@@ -65,12 +65,14 @@ The resulting binaries can be found in the `tensorflow/lite/micro/tools/make/gen
 The FPGA bitstream (gateware) can be built using [Litex Build Environment](https://github.com/timvideos/litex-buildenv).
 Building the gateware currently requires Xilinx's FPGA tooling, Vivado, to be installed in the system.
 
-Note: Some of LiteX Buildenv's scritps have problems when running in a git repository in detached state.
-Execute `git checkout -b tf_demo` in the `litex-buildenv` directory after cloning to avoid build errors.
-
 Build the gateware with:
 ```bash
 cd litex-buildenv
+
+# Some of LiteX Buildenv's scritps have problems when running in a git repository in detached state.
+# Let's create a fake branch to avoid build errors.
+git checkout -b tf_demo
+
 export CPU=vexriscv
 export CPU_VARIANT=full
 export PLATFORM=arty
