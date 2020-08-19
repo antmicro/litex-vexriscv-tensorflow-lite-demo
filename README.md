@@ -91,6 +91,13 @@ Once you have synthesized the gateware, load it onto the FPGA with:
 make gateware-load
 ```
 
+With the FPGA programmed, you can load the Zephyr binary on the device using the flterm program provided inside the environment you just initialized above:
+
+```bash
+cd $DEMO_HOME/tensorflow
+flterm --port=/dev/ttyUSB1 --kernel=tensorflow/lite/micro/tools/make/gen/zephyr_vexriscv_x86_64/magic_wand/build/zephyr/zephyr.bin --speed=115200
+```
+
 See the [Litex Build Environment Wiki](https://github.com/timvideos/litex-buildenv/wiki/Getting-Started) for more available options.
 
 ## Simulating in Renode
