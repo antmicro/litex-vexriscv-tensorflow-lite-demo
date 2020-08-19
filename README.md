@@ -21,7 +21,7 @@ git submodule update --init --recursive
 Install prerequisites (tested on Ubuntu 18.04):
 ```bash
 sudo apt update
-sudo apt install cmake ninja-build gperf ccache dfu-util device-tree-compiler wget python python3-pip python3-setuptools python3-tk python3-wheel xz-utils file make gcc gcc-multilib locales tar curl unzip
+sudo apt install cmake ninja-build gperf ccache dfu-util device-tree-compiler wget python python3-pip python3-setuptools python3-tk python3-wheel xz-utils file make gcc gcc-multilib locales tar curl unzip xxd
 ```
 
 Install Zephyr prerequisites:
