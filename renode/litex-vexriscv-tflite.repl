@@ -27,3 +27,10 @@ i2c: I2C.LiteX_I2C_Zephyr @ {
 
 adxl345: Sensors.ADXL345 @ i2c 0x1D
 
+eth: Network.LiteX_Ethernet @ {
+        sysbus 0x60009800;
+        sysbus 0xE0009800; // shadow
+
+        sysbus new Bus.BusMultiRegistration { address: 0x30000000; size: 0x2000; region: "buffer" };
+        sysbus new Bus.BusMultiRegistration { address: 0xB0000000; size: 0x2000; region: "buffer" } // shadow
+    }
