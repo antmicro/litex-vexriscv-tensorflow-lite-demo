@@ -1,5 +1,7 @@
 *** Settings ***
-Suite Setup                   Setup
+Suite Setup                   Run Keywords
+...                           Setup   AND
+...                           Execute Command           include @${CURDIR}/LiteX_I2C_Zephyr.cs
 Suite Teardown                Teardown
 Test Setup                    Reset Emulation
 Resource                      ${RENODEKEYWORDS}
@@ -46,10 +48,26 @@ Wait For Slope
     Wait For Line On Uart    ${SPACE}* * * * * * * *
 
 *** Test Cases ***
-Run TF Demo
+Run Hello World Demo
     Execute Command           using sysbus
 
-    Execute Command           include @${CURDIR}/LiteX_I2C_Zephyr.cs
+    Execute Command           mach create
+    Execute Command           machine LoadPlatformDescription @${CURDIR}/litex-vexriscv-tflite.repl
+
+    Execute Command           showAnalyzer uart Antmicro.Renode.Analyzers.LoggingUartAnalyzer
+
+    Execute Command           sysbus LoadELF @${CURDIR}/../tensorflow/tensorflow/lite/micro/tools/make/gen/zephyr_vexriscv_x86_64/hello_world/build/zephyr/zephyr.elf
+
+    Create Terminal Tester    sysbus.uart
+
+    Start Emulation
+
+    Wait For Line On Uart     Booting Zephyr OS
+    Wait For Line On Uart     x_value
+    Wait For Line On Uart     y_value
+
+Run Magic Wand Demo
+    Execute Command           using sysbus
 
     Execute Command           mach create
     Execute Command           machine LoadPlatformDescription @${CURDIR}/litex-vexriscv-tflite.repl
