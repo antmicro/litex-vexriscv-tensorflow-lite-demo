@@ -63,6 +63,8 @@ The resulting binaries can be found in the `tensorflow/lite/micro/tools/make/gen
 
 ## Building the gateware
 
+Note: For this section, if you have not already updated your udev rules, follow the instructions at "[Download & setup udev rules](https://github.com/timvideos/litex-buildenv/wiki/HowTo-LCA2018-FPGA-Miniconf#download--setup-udev-rules)" -- you probably won't need to reboot.
+
 The FPGA bitstream (gateware) can be built using [Litex Build Environment](https://github.com/timvideos/litex-buildenv).
 Building the gateware currently requires Xilinx's FPGA tooling, Vivado, to be installed in the system.
 
