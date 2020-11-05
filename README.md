@@ -2,12 +2,12 @@
 
 # Tensorflow lite demo running in Zephyr on Litex/VexRiscv SoC
 
-This repository collects all the repositories required to build and run Zephyr Tensorflow Lite demos on either:
+This repository collects all the repositories required to build and run [Zephyr](https://www.zephyrproject.org/) [TensorFlow Lite Micro](https://www.tensorflow.org/lite/microcontrollers) demos on either:
 
-* a Digilent Arty board
-* the open source Renode simulation framework (no hardware required)
+* a [Digilent Arty A7](https://reference.digilentinc.com/reference/programmable-logic/arty-a7/start) board
+* the open source [Renode simulation framework](http://renode.io/) (no hardware required)
 
-The hardware version of the `magic wand` demo also requires a [PmodACL](https://store.digilentinc.com/pmod-acl-3-axis-accelerometer/) to be connected to the `JD` port of the Arty board.
+The hardware version of the `magic wand` demo also requires a [PmodACL](https://store.digilentinc.com/pmod-acl-3-axis-accelerometer/) to be connected to the `JD` port of the Arty A7 board.
 
 ## Prerequisites
 
