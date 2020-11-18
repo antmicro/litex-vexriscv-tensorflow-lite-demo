@@ -90,7 +90,7 @@ namespace Antmicro.Renode.Peripherals.I2C
             registersCollection.Write(offset, value);
         }
 
-        public long Size => 0x10;
+        public long Size { get { return 0x10; } }
 
         private void HandleStopCondition(bool[] signals)
         {
