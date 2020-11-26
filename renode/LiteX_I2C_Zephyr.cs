@@ -30,12 +30,14 @@ namespace Antmicro.Renode.Peripherals.I2C
             i2cDecoder.RegisterPatternHandler((prev, curr) => prev[ClockSignal] && curr[ClockSignal] && prev[DataSignal] && !curr[DataSignal], name: "start", action: HandleStartCondition);
             i2cDecoder.RegisterPatternHandler((prev, curr) => prev[ClockSignal] && curr[ClockSignal] && !prev[DataSignal] && curr[DataSignal], name: "stop", action: HandleStopCondition);
 
+
+            IFlagRegisterField clockSignal, directionSignal, dataSignal;
             var registers = new Dictionary<long, DoubleWordRegister>
             {
                 {(long)Registers.BitBang, new DoubleWordRegister(this, 0x5) // SCL && SDA are high by default
-                    .WithFlag(0, out var clockSignal, name: "SCL")
-                    .WithFlag(1, out var directionSignal, name: "OE")
-                    .WithFlag(2, out var dataSignal, name: "SDA")
+                    .WithFlag(0, out clockSignal, name: "SCL")
+                    .WithFlag(1, out directionSignal, name: "OE")
+                    .WithFlag(2, out dataSignal, name: "SDA")
                     .WithWriteCallback((_, val) => i2cDecoder.AcceptState(new [] { clockSignal.Value, dataSignal.Value }))
                 },
 
@@ -235,8 +237,9 @@ namespace Antmicro.Renode.Peripherals.I2C
 
         private void HandleClockFalling(bool[] signals)
         {
+            bool unused;
             if(state == State.Read) {
-                var isEmpty = bufferFromDevice.TryDequeue(out var unused);
+                var isEmpty = bufferFromDevice.TryDequeue(out unused);
             }
         }
 
