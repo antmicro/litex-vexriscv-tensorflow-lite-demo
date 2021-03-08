@@ -20,7 +20,7 @@ timer0: Timers.LiteX_Timer @ {
     frequency: 100000000
     -> cpu@1
 
-i2c: I2C.LiteX_I2C_Zephyr @ {
+i2c: I2C.LiteX_I2C @ {
         sysbus 0x60003000;
         sysbus 0xE0003000 // shadow
     }

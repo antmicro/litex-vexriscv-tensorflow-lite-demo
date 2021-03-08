@@ -1,7 +1,5 @@
 *** Settings ***
-Suite Setup                   Run Keywords
-...                           Setup   AND
-...                           Execute Command           include @${CURDIR}/LiteX_I2C_Zephyr.cs
+Suite Setup                   Setup
 Suite Teardown                Teardown
 Test Setup                    Reset Emulation
 Resource                      ${RENODEKEYWORDS}
