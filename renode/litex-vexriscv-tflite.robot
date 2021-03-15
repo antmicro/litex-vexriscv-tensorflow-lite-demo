@@ -1,7 +1,5 @@
 *** Settings ***
-Suite Setup                   Run Keywords
-...                           Setup   AND
-...                           Execute Command           include @${CURDIR}/LiteX_I2C_Zephyr.cs
+Suite Setup                   Setup
 Suite Teardown                Teardown
 Test Setup                    Reset Emulation
 Resource                      ${RENODEKEYWORDS}
@@ -83,12 +81,6 @@ Run Magic Wand Demo
     Execute Command           i2c.adxl345 FeedSample @${CURDIR}/angle.data
     Execute Command           i2c.adxl345 FeedSample 0 15000 15000 128
     Execute Command           i2c.adxl345 FeedSample 0 0 0 128
-    Execute Command           i2c.adxl345 FeedSample @${CURDIR}/circle.data
-    Execute Command           i2c.adxl345 FeedSample 0 15000 15000 128
-    Execute Command           i2c.adxl345 FeedSample 0 0 0 128
-    Execute Command           i2c.adxl345 FeedSample @${CURDIR}/angle.data
-    Execute Command           i2c.adxl345 FeedSample 0 15000 15000 128
-    Execute Command           i2c.adxl345 FeedSample 0 0 0 128
 
     Create Terminal Tester    sysbus.uart  timeout=480
 
@@ -97,8 +89,6 @@ Run Magic Wand Demo
     Wait For Line On Uart     Booting Zephyr OS
     Wait For Line On Uart     Got accelerometer
 
-    Wait For Ring
-    Wait For Slope
     Wait For Ring
     Wait For Slope
 
