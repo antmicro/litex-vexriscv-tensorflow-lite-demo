@@ -113,14 +113,14 @@ Build the `Magic Wand` demo as described [in the section above](#magic-wand-demo
 
 Now you should have everything to run the simulation using the locally built binary:
 ```bash
-cd $DEMO_HOME/renode
+cd $DEMO_HOME/tensorflow/zephyr/samples/modules/tflite-micro/magic_wand/renode
 renode -e "s @litex-vexriscv-tflite.resc"
 ```
 
-Or using the prebuilt one: 
+Or using the prebuilt one:
 ```bash
-cd $DEMO_HOME/renode
-renode -e "set zephyr_elf @../binaries/magic_wand/zephyr.elf; s @litex-vexriscv-tflite.resc"
+cd $DEMO_HOME/tensorflow/zephyr/samples/modules/tflite-micro/magic_wand/renode
+renode -e "set zephyr_elf @../../../../../../../binaries/magic_wand/zephyr.elf; s @litex-vexriscv-tflite.resc"
 ```
 
 You should see the following output on the UART (which will open as a separate terminal in Renode automatically):
@@ -165,7 +165,7 @@ SLOPE:
     *
    *
   *
- * * * * * * * * 
+ * * * * * * * *
 ```
 
 In order to exit Renode, type `quit` in Monitor (the window with the Renode logo and `(machine-0)` prompt).
